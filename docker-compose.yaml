@@ -34,7 +34,3 @@ services:
 volumes:
   invoiceninja:
   db:
-
-#  docker run --rm -it invoiceninja/invoiceninja php artisan key:generate --show
-
-#  http://your-server-address:8200/
