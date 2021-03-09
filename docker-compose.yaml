@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+
+  db:
+    image: mariadb
+    container_name: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=ninja
+      - MYSQL_PASSWORD=ninja
+      - MYSQL_DATABASE=ninja
+      - MYSQL_USER=ninja
+
+  app:
+    image: cdnhammernet/invoiceninja
+    container_name: invoiceninja
+    restart: unless-stopped    
+    environment:
+      - APP_KEY=SomeRandomStringSomeRandomString 
+      - APP_URL=http://your-server-address 
+      - DB_HOST=db 
+      - DB_DATABASE=ninja 
+      - DB_USERNAME=ninja 
+      - DB_PASSWORD=ninja 
+    ports:
+      - 8200:80
+    links:
+      - db
+
+volumes:
+  invoiceninja:
+  db:
+
+#  docker run --rm -it invoiceninja/invoiceninja php artisan key:generate --show
+
+#  http://your-server-address:8200/
